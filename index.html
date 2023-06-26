@@ -1,9 +1,140 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>PDI</title>
-    </head>
-    <body>
-        <p>Alunos Leonardo e Mauricio</p>
-    </body>
-</html>
+:source-highlighter: pygments
+:numbered:
+:author: Leonardo e Mauricio
+:icons:
+:experimental:
+:stem:
+:imagesdir: ./figuras
+:toc: left
+:doctype: book
+:source-highlighter: pygments
+:caution-caption: Cuidado
+:important-caption: Importante
+:note-caption: Nota
+:tip-caption: Dica
+:warning-caption: Aviso
+:appendix-caption: Apêndice
+:example-caption: Exemplo
+:figure-caption: Figura
+:listing-caption: Listagem
+:table-caption: Tabela
+:toc-title: Sumário
+:preface-title: Prefácio
+:version-label: Versão
+:last-update-label: Última atualização
+
+= Processamento Digital de Imagens (PDI) - Exercícios
+
+== Introdução
+
+O intuito deste site é apresentar as soluções dos exercícios propostos na disciplina de Processamento Digital de Imagens (DCA0445), ministrado pelo professor Agostinho Brito.
+
+Todos os exercícios que serão apresentados foram desenvolvidos em C++ e com a biblioteca OpenCV utilizando o sistema operacional Windows 10. Para compilação foi utilizado o arquivo Makefile disponibilizado pelo professor e para a captura de vídeo foi utilizado um celular android com o software Droidcam.
+
+== Manipulando pixels em uma imagem
+
+Para a realização dos exercícios a seguir foi necessário a utilização do código exemplo pixels.cpp como referência e da figura golden.png para realização dos testes.
+
+
+image::golden.png[title="Golden.png"]
+
+=== Exercício Regiões
+
+[source, cpp]
+----
+#include <opencv2/opencv.hpp>
+#include <iostream>
+using namespace cv;
+using namespace std;
+
+int main() {
+   
+    vector<String> endImg;
+    Point ini, fim;
+    vector<Point> pontos;
+    //acessando a imagem original e transformando em preto e branco 
+    glob("golden.png", endImg, false);
+    Mat imagem = imread(endImg[0], CV_LOAD_IMAGE_GRAYSCALE);
+
+    cout << "Digite a cordenada inicial de x entre 0 e " << imagem.size().width << endl;
+    cin >> ini.x;
+    cout << "Digite a cordenada final de x  entre 0 e " << imagem.size().width << endl;
+    cin >> fim.x;
+    cout << "Digite a cordenada inicial de y entre 0 e " << imagem.size().height << endl;
+    cin >> ini.y;
+    cout << "Digite a cordenada final de y entre 0 e " << imagem.size().height << endl;
+    cin >> fim.y;
+    
+    //criando o quadrado para mostrar o negativo dessa regiao 
+    for (int l = ini.x; l < fim.x; l++) {
+        for (int c = ini.y; c < fim.y; c++) {
+            imagem.at<uchar>(c, l) = 255 - imagem.at<uchar>(c, l);
+        }
+    }
+    //mostrando o resultado
+    imshow("Golden", imagem);
+    waitKey();
+
+    return 0;
+}
+----
+//imagem depois da seleção do programa 
+image::golden-regiões.png[title="Golden.png"]
+
+=== Exercício Troca de regiões
+
+[source, cpp]
+----
+#include <iostream>
+#include <opencv2/opencv.hpp>
+
+using namespace cv;
+using namespace std;
+
+int main(int, char**) {
+    Mat image, imageaux;
+
+    image = imread("golden.png", CV_LOAD_IMAGE_GRAYSCALE);
+    if (!image.data)
+        cout << "nao abriu image.png" << endl;
+
+
+    imageaux = imread("golden.png", CV_LOAD_IMAGE_GRAYSCALE);
+    if (!imageaux.data)
+        cout << "nao abriu image.png na auxiliar" << endl;
+
+    for (int i = 0; i < (image.size().height) / 2; i++) { //2 quad
+        for (int j = 0; j < (image.size().width) / 2; j++) {
+            image.at<uchar>(i, j) = imageaux.at<uchar>(i + (image.size().height) / 2, j + (image.size().width) / 2);
+        }
+    }
+
+    for (int i = (image.size().height) / 2; i < (image.size().height); i++) { //3 quad
+        for (int j = 0; j < (image.size().width) / 2; j++) {
+            image.at<uchar>(i, j) = imageaux.at<uchar>(i - (image.size().height) / 2, j + (image.size().width) / 2);
+        }
+    }
+
+    for (int i = 0; i < (image.size().height) / 2; i++) { //1 quad
+        for (int j = ((image.size().width) / 2); j < image.size().width; j++) {
+            image.at<uchar>(i, j) = imageaux.at<uchar>(i + (image.size().height) / 2, j - (image.size().width) / 2);
+        }
+    }
+
+    for (int i = (image.size().height) / 2; i < (image.size().height); i++) { //4 quad
+        for (int j = ((image.size().width) / 2); j < image.size().width; j++) {
+            image.at<uchar>(i, j) = imageaux.at<uchar>(i - (image.size().height) / 2, j - (image.size().width) / 2);
+        }
+    }
+
+    //namedWindow("janela", WINDOW_AUTOSIZE);
+    imshow("Original", imageaux);
+    imshow("golden", image);
+    
+    waitKey();
+
+    return 0;
+}
+----
+
+image::golden - troca de regiões.png[title="Trocaregioes.cpp"]
