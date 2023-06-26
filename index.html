@@ -453,36 +453,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_exercício_troca_de_regiões">2.2. Exercício Troca de regiões</a></li>
 </ul>
 </li>
-<li><a href="#_preenchendo_regiões">3. Preenchendo regiões</a>
+<li><a href="#_serialização_de_dados_em_ponto_flutuante_via_filestorage">3. Serialização de dados em ponto flutuante via FileStorage</a>
 <ul class="sectlevel2">
-<li><a href="#_exercício_labeling">3.1. Exercício Labeling</a></li>
-</ul>
-</li>
-<li><a href="#_manipulação_de_histogramas">4. Manipulação de Histogramas</a>
-<ul class="sectlevel2">
-<li><a href="#_exercício_equalizador">4.1. Exercício Equalizador</a></li>
-<li><a href="#_exercício_detector_de_movimento">4.2. Exercício Detector de movimento</a></li>
-</ul>
-</li>
-<li><a href="#_filtragem_no_domínio_espacial_i">5. Filtragem no domínio espacial I</a>
-<ul class="sectlevel2">
-<li><a href="#_exercício_do_filtro_laplaciano_com_gauss">5.1. Exercício do filtro Laplaciano com Gauss</a></li>
-</ul>
-</li>
-<li><a href="#_filtragem_no_domínio_espacial_ii">6. Filtragem no domínio espacial II</a>
-<ul class="sectlevel2">
-<li><a href="#_exercício_tilt_shift_imagem">6.1. Exercício Tilt-shift (Imagem)</a></li>
-<li><a href="#_exercício_tilt_shiftvídeo">6.2. Exercício Tilt-shift(Vídeo)</a></li>
-</ul>
-</li>
-<li><a href="#_filtragem_no_domínio_da_frequência">7. Filtragem no domínio da frequência</a>
-<ul class="sectlevel2">
-<li><a href="#_exercício_filtro_homomórfico">7.1. Exercício Filtro Homomórfico</a></li>
-</ul>
-</li>
-<li><a href="#_quantização_vetorial_com_k_means">8. Quantização vetorial com k-means</a>
-<ul class="sectlevel2">
-<li><a href="#_exercício_kmeans">8.1. Exercício Kmeans</a></li>
+<li><a href="#_exercício">3.1. Exercício</a></li>
 </ul>
 </li>
 </ul>
@@ -493,10 +466,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_introdução">1. Introdução</h2>
 <div class="sectionbody">
 <div class="paragraph data-line-30">
-<p>O intuito deste site é apresentar as soluções dos exercícios propostos na disciplina de Processamento Digital de Imagens (DCA0445), ministrado pelo professor Agostinho Brito.</p>
+<p>O intuito deste site é mostrar as soluções dos exercícios propostos na disciplina de Processamento Digital de Imagens (DCA0445), ministrado pelo professor Agostinho Brito.</p>
 </div>
 <div class="paragraph data-line-32">
-<p>Todos os exercícios que serão apresentados foram desenvolvidos em C++ e com a biblioteca OpenCV utilizando o sistema operacional Windows 10. Para compilação foi utilizado o arquivo Makefile disponibilizado pelo professor e para a captura de vídeo foi utilizado um celular android com o software Droidcam.</p>
+<p>Todos os exercícios que serão apresentados foram desenvolvidos em C++ e com a biblioteca OpenCV utilizando o sistema operacional Windows 10. Para compilação foi utilizado o software Visual Studio 2019.</p>
 </div>
 </div>
 </div>
@@ -504,7 +477,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_manipulando_pixels_em_uma_imagem">2. Manipulando pixels em uma imagem</h2>
 <div class="sectionbody">
 <div class="paragraph data-line-36">
-<p>Para a realização dos exercícios a seguir foi necessário a utilização do código exemplo pixels.cpp como referência e da figura golden.png para realização dos testes.</p>
+<p>Para a realização dos exercícios ultilizamos do código exemplo pixels.cpp como referência e da figura golden.png para realização dos testes, o código pixels.cpp fui disponibilizado pelo professor e a imagem é de autoria.</p>
 </div>
 <div class="imageblock data-line-39">
 <div class="content">
@@ -620,864 +593,81 @@ int main(int, char**) {
 <div class="content">
 <img src="./figuras/golden%20-%20troca%20de%20regiões.png" alt="golden   troca de regiões">
 </div>
-<div class="title">Figura 3. Trocaregioes.cpp</div>
+<div class="title">Figura 3. Troca regioes.png</div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1 data-line-142">
-<h2 id="_preenchendo_regiões">3. Preenchendo regiões</h2>
+<h2 id="_serialização_de_dados_em_ponto_flutuante_via_filestorage">3. Serialização de dados em ponto flutuante via FileStorage</h2>
 <div class="sectionbody">
-<div class="imageblock data-line-144">
+<div class="paragraph data-line-144">
+<p>Para realizar este exercício utilizamos como base o  filestorage.cpp, código que foi disponibilizado pelo professor.</p>
+</div>
+<div class="imageblock data-line-146">
 <div class="content">
-<img src="./figuras/bolhas.png" alt="bolhas">
+<img src="./figuras/Saida%20do%20programa%20filestorege.png" alt="Saida do programa filestorege">
 </div>
-<div class="title">Figura 4. Bolhas.png</div>
+<div class="title">Figura 4. Senoide gerada com 8 periodos</div>
 </div>
-<div class="sect2 data-line-146">
-<h3 id="_exercício_labeling">3.1. Exercício Labeling</h3>
-<div class="listingblock data-line-149">
+<div class="sect2 data-line-148">
+<h3 id="_exercício">3.1. Exercício</h3>
+<div class="listingblock data-line-151">
 <div class="content">
 <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
 #include &lt;opencv2/opencv.hpp&gt;
+#include &lt;sstream&gt;
+#include &lt;string&gt;
 
-using namespace cv;
+int SIDE = 256;
+int PERIODOS = 4;
+float M_PI = 3.14159;
+int amplitude = 127;
 
-int main(int argc, char** argv){
-  cv::Mat image, realce;
-  int width, height;
-  int nobjects, comBolhas;
+int main(int argc, char** argv) {
+    std::stringstream ss_img, ss_yml;
+    cv::Mat image;
 
-  cv::Point p;
-  image = cv::imread(argv[1], cv::IMREAD_GRAYSCALE);
+    ss_yml &lt;&lt; "senoide-" &lt;&lt; SIDE &lt;&lt; ".yml";
+    image = cv::Mat::zeros(SIDE, SIDE, CV_32FC1);
 
-  if(!image.data){
-    std::cout &lt;&lt; "imagem nao carregou corretamente\n";
-    return(-1);
-  }
+    cv::FileStorage fs(ss_yml.str(), cv::FileStorage::WRITE);
 
-  width=image.cols;
-  height=image.rows;
-  std::cout &lt;&lt; width &lt;&lt; "x" &lt;&lt; height &lt;&lt; std::endl;
-
-  p.x=0;
-  p.y=0;
-
-  // -------VERIFICAÇÃO DE BORDAS--------
-  // Horizontais superior e inferior
-  // Verifica a linha na altura i = 0 e na altura i = height - 1;
-  for (int i = 0; i &lt; height; i = i + height - 1) {
-        for (int j = 0; j &lt; width; j++) {
-            if (image.at&lt;uchar&gt;(i,j) == 255) {
-                // achou um objeto
-                p.x = j;
-                p.y = i;
-                floodFill(image, p, 0);
-            }
+    for (int i = 0; i &lt; SIDE; i++) {
+        for (int j = 0; j &lt; SIDE; j++) {
+            image.at&lt;float&gt;(i, j) = 127 * sin(2 * M_PI * PERIODOS * amplitude * j / SIDE) + 128;
         }
-  }
-  // Verticais esquerda e direita
-  // Verifica a coluna na largura i = 0 e na largura i = width - 1;
-  for (int i = 0; i &lt; height; i++) {
-        for (int j = 0; j &lt; width; j = j + width - 1) {
-            if (image.at&lt;uchar&gt;(i,j) == 255) {
-                // achou um objeto
-                p.x = j;
-                p.y = i;
-                floodFill(image, p, 0);
-            }
-        }
-  }
-
-  // busca objetos presentes
-  nobjects=0;
-  for(int i=0; i&lt;height; i++){
-    for(int j=0; j&lt;width; j++){
-      if(image.at&lt;uchar&gt;(i,j) == 255){
-        // achou um objeto
-        nobjects++;
-        p.x=j;
-        p.y=i;
-  		// preenche o objeto com o contador
-        cv::floodFill(image,p,nobjects);
-      }
-    }
-  }
-
-  comBolhas=0;
-  p.x = 0;
-  p.y = 0;
-  floodFill(image, p, 255);
-  for(int i=1; i&lt;height; i++){
-    for(int j=1; j&lt;width; j++){
-      if(image.at&lt;uchar&gt;(i-1, j) &gt; 0
-      &amp;&amp; image.at&lt;uchar&gt;(i-1,j) &lt; 255
-      &amp;&amp; image.at&lt;uchar&gt;(i,j) == 0){
-        // achou um objeto
-        comBolhas++;
-        p.x=j;
-        p.y=i;
-  		// preenche o objeto com o contador
-        cv::floodFill(image,p,255);
-      }
-    }
-  }
-  std::cout &lt;&lt; "a figura tem " &lt;&lt; nobjects &lt;&lt; " objetos\n";
-  std::cout &lt;&lt; "a figura tem " &lt;&lt; comBolhas &lt;&lt; " objetos com bolhas internas\n";
-  cv::imshow("image", image);
-  cv::imwrite("labeling.png", image);
-  cv::waitKey();
-  return 0;
-}</code></pre>
-</div>
-</div>
-<div class="imageblock data-line-243">
-<div class="content">
-<img src="./figuras/labeling.png" alt="labeling">
-</div>
-<div class="title">Figura 5. Resultado do labeling</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1 data-line-245">
-<h2 id="_manipulação_de_histogramas">4. Manipulação de Histogramas</h2>
-<div class="sectionbody">
-<div class="listingblock data-line-248">
-<div class="content">
-<pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
-#include &lt;opencv2/opencv.hpp&gt;
-
-int main(int argc, char** argv){
-  cv::Mat image;
-  int width, height;
-  cv::VideoCapture cap;
-  std::vector&lt;cv::Mat&gt; planes;
-  cv::Mat histR, histG, histB;
-  int nbins = 64;
-  float range[] = {0, 255};
-  const float *histrange = { range };
-  bool uniform = true;
-  bool acummulate = false;
-  int key;
-
-	cap.open(0);
-
-  if(!cap.isOpened()){
-    std::cout &lt;&lt; "cameras indisponiveis";
-    return -1;
-  }
-
-  cap.set(cv::CAP_PROP_FRAME_WIDTH, 640);
-  cap.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
-  width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
-  height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
-
-  std::cout &lt;&lt; "largura = " &lt;&lt; width &lt;&lt; std::endl;
-  std::cout &lt;&lt; "altura  = " &lt;&lt; height &lt;&lt; std::endl;
-
-  int histw = nbins, histh = nbins/2;
-  cv::Mat histImgR(histh, histw, CV_8UC3, cv::Scalar(0,0,0));
-  cv::Mat histImgG(histh, histw, CV_8UC3, cv::Scalar(0,0,0));
-  cv::Mat histImgB(histh, histw, CV_8UC3, cv::Scalar(0,0,0));
-
-  while(1){
-    cap &gt;&gt; image;
-    cv::split (image, planes);
-    cv::calcHist(&amp;planes[0], 1, 0, cv::Mat(), histB, 1,
-                 &amp;nbins, &amp;histrange,
-                 uniform, acummulate);
-    cv::calcHist(&amp;planes[1], 1, 0, cv::Mat(), histG, 1,
-                 &amp;nbins, &amp;histrange,
-                 uniform, acummulate);
-    cv::calcHist(&amp;planes[2], 1, 0, cv::Mat(), histR, 1,
-                 &amp;nbins, &amp;histrange,
-                 uniform, acummulate);
-
-    cv::normalize(histR, histR, 0, histImgR.rows, cv::NORM_MINMAX, -1, cv::Mat());
-    cv::normalize(histG, histG, 0, histImgG.rows, cv::NORM_MINMAX, -1, cv::Mat());
-    cv::normalize(histB, histB, 0, histImgB.rows, cv::NORM_MINMAX, -1, cv::Mat());
-
-    histImgR.setTo(cv::Scalar(0));
-    histImgG.setTo(cv::Scalar(0));
-    histImgB.setTo(cv::Scalar(0));
-
-    for(int i=0; i&lt;nbins; i++){
-      cv::line(histImgR,
-               cv::Point(i, histh),
-               cv::Point(i, histh-cvRound(histR.at&lt;float&gt;(i))),
-               cv::Scalar(0, 0, 255), 1, 8, 0);
-      cv::line(histImgG,
-               cv::Point(i, histh),
-               cv::Point(i, histh-cvRound(histG.at&lt;float&gt;(i))),
-               cv::Scalar(0, 255, 0), 1, 8, 0);
-      cv::line(histImgB,
-               cv::Point(i, histh),
-               cv::Point(i, histh-cvRound(histB.at&lt;float&gt;(i))),
-               cv::Scalar(255, 0, 0), 1, 8, 0);
-    }
-    histImgR.copyTo(image(cv::Rect(0, 0       ,nbins, histh)));
-    histImgG.copyTo(image(cv::Rect(0, histh   ,nbins, histh)));
-    histImgB.copyTo(image(cv::Rect(0, 2*histh ,nbins, histh)));
-    cv::imshow("image", image);
-    key = cv::waitKey(30);
-    if(key == 27) break;
-  }
-  return 0;
-}</code></pre>
-</div>
-</div>
-<div class="sect2 data-line-331">
-<h3 id="_exercício_equalizador">4.1. Exercício Equalizador</h3>
-<div class="listingblock data-line-334">
-<div class="content">
-<pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
-#include &lt;opencv2/opencv.hpp&gt;
-
-int main(int argc, char** argv){
-  cv::Mat image, imageCinza,imageCinzaEq, hist;
-  cv::VideoCapture cap;
-  int width, height;
-  int nbins = 64;
-  float range[] = {0, 255};
-  const float *histrange = { range };
-  bool uniform = true;
-  bool acummulate = false;
-  int key;
-
-  //Escolhe a câmera do celular - DroidCam.
-  cap.open(0);
-
-  //Testa se a câmera esta aberta
-  if(!cap.isOpened()){
-    std::cout &lt;&lt; "cameras indisponiveis";
-    return -1;
-  }
-
-  //Define o tamanho da imagem que irá aparecer em tela
-  cap.set(cv::CAP_PROP_FRAME_WIDTH, 640);
-  cap.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
-  width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
-  height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
-
-  std::cout &lt;&lt; "largura = " &lt;&lt; width &lt;&lt; std::endl;
-  std::cout &lt;&lt; "altura  = " &lt;&lt; height &lt;&lt; std::endl;
-
-  //Cria um histograma com um unsigned de tam histh x histw
-  int histw = nbins, histh = nbins/2;
-  cv::Mat histImg(histh, histw, CV_8U, cv::Scalar(0));
-
-  while(1){
-    //Captura a imagem e converte para a cor cinza
-    cap &gt;&gt; image;
-    cv::cvtColor(image, imageCinza, cv::COLOR_BGR2GRAY);
-
-    //Faz uma copia da imagem cinza para a imagem a ser equalizada
-    imageCinza.copyTo(imageCinzaEq);
-
-    //Utiliza a função equalize do openCV para equalizar a imagem
-    cv::equalizeHist(imageCinzaEq, imageCinzaEq);
-
-    //Calculo do histograma
-    cv::calcHist(&amp;imageCinzaEq, 1, 0, cv::Mat(), hist, 1,
-                 &amp;nbins, &amp;histrange,
-                 uniform, acummulate);
-
-    //Normalização do histograma
-    cv::normalize(hist, hist, 0, histImg.rows, cv::NORM_MINMAX, -1, cv::Mat());
-    histImg.setTo(cv::Scalar(0));
-
-    //Desenha o histograma
-    for(int i=0; i&lt;nbins; i++){
-      cv::line(histImg,
-               cv::Point(i, histh),
-               cv::Point(i, histh-cvRound(hist.at&lt;float&gt;(i))),
-               cv::Scalar(255), 1, 8, 0);
     }
 
-    //A imagem do histograma é copiada para o canto da tela.
-    histImg.copyTo(imageCinzaEq(cv::Rect(0, 0,nbins, histh)));
+    fs &lt;&lt; "mat" &lt;&lt; image;
+    fs.release();
 
-    //Ao executar o programa, serão exibidas:
-    // 1 - A imagem que esta sendo capturada pela câmera;
-    // 2 - A imagem capturada em tons de Cinza;
-    // 3 - A imagem em tons de cinza equalizada.
-    cv::imshow("Imagem Normal", image);
-    cv::imshow("Imagem Cinza", imageCinza);
-    cv::imshow("Imagem Cinza Equalizada", imageCinzaEq);
-    key = cv::waitKey(30);
-    if(key == 27) break;
-  }
-  return 0;
-}</code></pre>
-</div>
-</div>
-<div class="imageblock data-line-416">
-<div class="content">
-<img src="./figuras/fig3.png" alt="fig3">
-</div>
-<div class="title">Figura 6. Conversão da imagem normal para cinza (iluminado)</div>
-</div>
-<div class="imageblock data-line-418">
-<div class="content">
-<img src="./figuras/fig4.png" alt="fig4">
-</div>
-<div class="title">Figura 7. Equalização da imagem (iluminado)</div>
-</div>
-<div class="imageblock data-line-420">
-<div class="content">
-<img src="./figuras/fig5.png" alt="fig5">
-</div>
-<div class="title">Figura 8. Conversão da imagem normal para cinza (sem iluminação)</div>
-</div>
-<div class="imageblock data-line-422">
-<div class="content">
-<img src="./figuras/fig6.png" alt="fig6">
-</div>
-<div class="title">Figura 9. Equalização da imagem (sem iluminação)</div>
-</div>
-</div>
-<div class="sect2 data-line-424">
-<h3 id="_exercício_detector_de_movimento">4.2. Exercício Detector de movimento</h3>
-<div class="listingblock data-line-427">
-<div class="content">
-<pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
-#include &lt;opencv2/opencv.hpp&gt;
+    cv::normalize(image, image, 0, 255, cv::NORM_MINMAX);
+    image.convertTo(image, CV_8U);
+    ss_img &lt;&lt; "senoide-" &lt;&lt; SIDE &lt;&lt; ".png";
+    cv::imwrite(ss_img.str(), image);
 
-int main(int argc, char** argv){
-  cv::Mat image, quadro;
-  int width, height;
-  cv::VideoCapture cap;
-  std::vector&lt;cv::Mat&gt; planes;
-  cv::Mat histR, histR_passado;
-  int nbins = 64;
-  float limite = 0.99;
-  float range[] = {0, 255};
-  const float *histrange = { range };
-  bool uniform = true;
-  bool acummulate = false;
-  int key;
+    fs.open(ss_yml.str(), cv::FileStorage::READ);
+    fs["mat"] &gt;&gt; image;
 
-  cap.open(0);
-
-  if(!cap.isOpened()){
-    std::cout &lt;&lt; "cameras indisponiveis";
-    return -1;
-  }
-
-  cap.set(cv::CAP_PROP_FRAME_WIDTH, 640);
-  cap.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
-  width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
-  height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
-
-  std::cout &lt;&lt; "largura = " &lt;&lt; width &lt;&lt; std::endl;
-  std::cout &lt;&lt; "altura  = " &lt;&lt; height &lt;&lt; std::endl;
-
-  int histw = nbins, histh = nbins/2;
-  cv::Mat histImgR(histh, histw, CV_8UC3, cv::Scalar(0,0,0));
-
-  while(1){
-    cap &gt;&gt; image;
-    cv::split (image, planes);
-    cv::calcHist(&amp;planes[2], 1, 0, cv::Mat(), histR, 1,
-                 &amp;nbins, &amp;histrange,
-                 uniform, acummulate);
-
-    cv::normalize(histR, histR, 0, histImgR.rows, cv::NORM_MINMAX, -1, cv::Mat());
-
-    histImgR.setTo(cv::Scalar(0));
-
-
-    for(int i=0; i&lt;nbins; i++){
-        cv::line(histImgR,
-        cv::Point(i, histh),
-        cv::Point(i, histh-cvRound(histR.at&lt;float&gt;(i))),
-        cv::Scalar(0, 0, 255), 1, 8, 0);
-    }
-
-    if(!histR_passado.empty()){
-        float erro = compareHist(histR_passado, histR, cv::HISTCMP_CORREL);
-        std::cout &lt;&lt; erro &lt;&lt; std::endl;
-
-        if(erro &lt; limite){
-            std::cout &lt;&lt; "ALERTA DE MOVIMENTO!" &lt;&lt; std::endl;
-        }
-
-    }
-
-
-    histImgR.copyTo(image(cv::Rect(0, 0, nbins, histh)));
-    histR.copyTo(histR_passado);
+    cv::normalize(image, image, 0, 255, cv::NORM_MINMAX);
+    image.convertTo(image, CV_8U);
 
     cv::imshow("image", image);
+    cv::waitKey();
 
-    key = cv::waitKey(30);
-    if(key == 27) break;
-  }
-  return 0;
+    return 0;
 }</code></pre>
 </div>
 </div>
-<div class="videoblock data-line-505">
-<div class="title">Detector de movimentos</div>
+<div class="imageblock data-line-198">
 <div class="content">
-<video src="./figuras/video1.webm" controls>
-Your browser does not support the video tag.
-</video>
+<img src="./figuras/senoide.png" alt="senoide">
 </div>
+<div class="title">Figura 5. Resultado do Filestorege</div>
 </div>
-</div>
-</div>
-</div>
-<div class="sect1 data-line-507">
-<h2 id="_filtragem_no_domínio_espacial_i">5. Filtragem no domínio espacial I</h2>
-<div class="sectionbody">
-<div class="listingblock data-line-511">
-<div class="content">
-<pre class="highlight"><code class="language-cpp" data-lang="cpp"></code></pre>
-</div>
-</div>
-<div class="sect2 data-line-516">
-<h3 id="_exercício_do_filtro_laplaciano_com_gauss">5.1. Exercício do filtro Laplaciano com Gauss</h3>
-<div class="listingblock data-line-520">
-<div class="content">
-<pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
-#include &lt;opencv2/opencv.hpp&gt;
-
-void printmask(cv::Mat &amp;m) {
-  for (int i = 0; i &lt; m.size().height; i++) {
-    for (int j = 0; j &lt; m.size().width; j++) {
-      std::cout &lt;&lt; m.at&lt;float&gt;(i, j) &lt;&lt; ",";
-    }
-    std::cout &lt;&lt; "\n";
-  }
-}
-
-void opcao()
-{
-  std::cout &lt;&lt; "\nSelecione o filtro: \n"
-          "a - Modulo\n"
-          "m - Media\n"
-          "h - Horizontal\n"
-          "v - Vertical\n"
-          "g - Gauss\n"
-          "l - Laplaciano\n"
-          "x - Laplaciano do Gaussiano\n"
-          "esc - sair\n";
-}
-
-int main(int, char **) {
-  cv::VideoCapture cap;  // open the default camera
-  float media[] = {0.1111, 0.1111, 0.1111, 0.1111, 0.1111,
-                   0.1111, 0.1111, 0.1111, 0.1111};
-  float gauss[] = {0.0625, 0.125,  0.0625, 0.125, 0.25,
-                   0.125,  0.0625, 0.125,  0.0625};
-  float horizontal[] = {-1, 0, 1, -2, 0, 2, -1, 0, 1};
-  float vertical[] = {-1, -2, -1, 0, 0, 0, 1, 2, 1};
-  float laplacian[] = {0, -1, 0, -1, 4, -1, 0, -1, 0};
-  float boost[] = {0, -1, 0, -1, 5.2, -1, 0, -1, 0};
-
-  cv::Mat frame, framegray, frame32f, frameFiltered;
-  cv::Mat mask(3, 3, CV_32F), mask1, mask2;
-  cv::Mat result;
-  double width, height;
-  int absolut;
-  char key;
-  bool juntarFiltros = false;
-
-  cap.open(0);
-
-  if (!cap.isOpened())  // check if we succeeded
-    return -1;
-
-  cap.set(cv::CAP_PROP_FRAME_WIDTH, 640);
-  cap.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
-  width = cap.get(cv::CAP_PROP_FRAME_WIDTH);
-  height = cap.get(cv::CAP_PROP_FRAME_HEIGHT);
-  std::cout &lt;&lt; "largura=" &lt;&lt; width &lt;&lt; "\n";
-  ;
-  std::cout &lt;&lt; "altura =" &lt;&lt; height &lt;&lt; "\n";
-  ;
-  std::cout &lt;&lt; "fps    =" &lt;&lt; cap.get(cv::CAP_PROP_FPS) &lt;&lt; "\n";
-  std::cout &lt;&lt; "format =" &lt;&lt; cap.get(cv::CAP_PROP_FORMAT) &lt;&lt; "\n";
-
-  cv::namedWindow("filtroespacial", cv::WINDOW_NORMAL);
-  cv::namedWindow("original", cv::WINDOW_NORMAL);
-
-  mask = cv::Mat(3, 3, CV_32F, media);
-  mask1 = cv::Mat(3, 3, CV_32F, laplacian);
-  mask2 = cv::Mat(3, 3, CV_32F, gauss);
-
-  absolut = 1;  // calcs abs of the image
-
-  opcao();
-  for (;;) {
-    cap &gt;&gt; frame;  // get a new frame from camera
-    cv::cvtColor(frame, framegray, cv::COLOR_BGR2GRAY);
-    cv::flip(framegray, framegray, 1);
-    cv::imshow("original", framegray);
-    framegray.convertTo(frame32f, CV_32F);
-
-
-    if(juntarFiltros == true){
-        //Recebe o filtro gaussiano e logo apos recebe o filtro
-        //laplaciano
-        cv::filter2D(frame32f, frameFiltered, frame32f.depth(),
-                    mask2, cv::Point(1, 1), 0);
-        cv::filter2D(frameFiltered, frameFiltered, frame32f.depth(),
-                    mask1, cv::Point(1, 1), 0);
-    }else{
-        cv::filter2D(frame32f, frameFiltered, frame32f.depth(),
-                    mask, cv::Point(1, 1), 0);
-    }
-
-    if (absolut) {
-      frameFiltered = cv::abs(frameFiltered);
-    }
-
-    frameFiltered.convertTo(result, CV_8U);
-
-    cv::imshow("filtroespacial", result);
-
-    key = (char)cv::waitKey(10);
-    if (key == 27) break;  // esc pressed!
-    switch (key) {
-      case 'a':
-        juntarFiltros = false;
-        absolut = !absolut;
-        break;
-      case 'm':
-        juntarFiltros = false;
-        mask = cv::Mat(3, 3, CV_32F, media);
-        printmask(mask);
-        break;
-      case 'g':
-        juntarFiltros = false;
-        mask = cv::Mat(3, 3, CV_32F, gauss);
-        printmask(mask);
-        break;
-      case 'h':
-        juntarFiltros = false;
-        mask = cv::Mat(3, 3, CV_32F, horizontal);
-        printmask(mask);
-        break;
-      case 'v':
-        juntarFiltros = false;
-        mask = cv::Mat(3, 3, CV_32F, vertical);
-        printmask(mask);
-        break;
-      case 'l':
-        juntarFiltros = false;
-        mask = cv::Mat(3, 3, CV_32F, laplacian);
-        printmask(mask);
-        break;
-      case 'b':
-        juntarFiltros = false;
-        mask = cv::Mat(3, 3, CV_32F, boost);
-        break;
-      case 'x':
-      //Ativa a flag para juntar os filtros laplaciano e gaussiano.
-        juntarFiltros = true;
-        printmask(mask1);
-        break;
-      default:
-        break;
-    }
-  }
-  return 0;
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1 data-line-669">
-<h2 id="_filtragem_no_domínio_espacial_ii">6. Filtragem no domínio espacial II</h2>
-<div class="sectionbody">
-<div class="listingblock data-line-673">
-<div class="content">
-<pre class="highlight"><code class="language-cpp" data-lang="cpp"></code></pre>
-</div>
-</div>
-<div class="sect2 data-line-678">
-<h3 id="_exercício_tilt_shift_imagem">6.1. Exercício Tilt-shift (Imagem)</h3>
-<div class="listingblock data-line-682">
-<div class="content">
-<pre class="highlight"><code class="language-cpp" data-lang="cpp"></code></pre>
-</div>
-</div>
-</div>
-<div class="sect2 data-line-687">
-<h3 id="_exercício_tilt_shiftvídeo">6.2. Exercício Tilt-shift(Vídeo)</h3>
-<div class="listingblock data-line-691">
-<div class="content">
-<pre class="highlight"><code class="language-cpp" data-lang="cpp"></code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1 data-line-695">
-<h2 id="_filtragem_no_domínio_da_frequência">7. Filtragem no domínio da frequência</h2>
-<div class="sectionbody">
-<div class="sect2 data-line-696">
-<h3 id="_exercício_filtro_homomórfico">7.1. Exercício Filtro Homomórfico</h3>
-<div class="listingblock data-line-698">
-<div class="content">
-<pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
-#include &lt;cmath&gt;
-#include &lt;opencv2/opencv.hpp&gt;
-#include &lt;opencv2/core.hpp&gt;
-#include &lt;opencv2/imgproc/imgproc.hpp&gt;
-
-#define gH 2
-#define gL 0.5
-#define c 0.45
-#define d0 8
-
-using namespace cv;
-using namespace std;
-
-// troca os quadrantes da imagem da DFT
-void trocaQuadrantes(Mat&amp; image ){
-   cv::Mat tmp, A, B, C, D;
-
-  // se a imagem tiver tamanho impar, recorta a regiao para o maior
-  // tamanho par possivel (-2 = 1111...1110)
-  image = image(cv::Rect(0, 0, image.cols &amp; -2, image.rows &amp; -2));
-
-  int centerX = image.cols / 2;
-  int centerY = image.rows / 2;
-
-  // rearranja os quadrantes da transformada de Fourier de forma que
-  // a origem fique no centro da imagem
-  // A B   -&gt;  D C
-  // C D       B A
-  A = image(cv::Rect(0, 0, centerX, centerY));
-  B = image(cv::Rect(centerX, 0, centerX, centerY));
-  C = image(cv::Rect(0, centerY, centerX, centerY));
-  D = image(cv::Rect(centerX, centerY, centerX, centerY));
-
-  // swap quadrants (Top-Left with Bottom-Right)
-  A.copyTo(tmp);
-  D.copyTo(A);
-  tmp.copyTo(D);
-
-  // swap quadrant (Top-Right with Bottom-Left)
-  C.copyTo(tmp);
-  B.copyTo(C);
-  tmp.copyTo(B);
-}
-
-int main(int argc, char** argv){
-  Mat imaginaryInput, complexImage;
-  Mat padded, filter, filter_print;
-  Mat image, tmp;
-  Mat_&lt;float&gt; zeros;
-  vector&lt;Mat&gt; planos, filtros, dfts;
-
-  int dft_M, dft_N;
-
-  image = imread(argv[1], IMREAD_GRAYSCALE);
-  imshow("Imagem Inicial", image);
-
-  // identifica os tamanhos otimos para
-  // calculo do FFT
-  dft_M = getOptimalDFTSize(image.rows);
-  dft_N = getOptimalDFTSize(image.cols);
-
-  // realiza o padding da imagem
-  copyMakeBorder(image, padded, 0,
-                 dft_M - image.rows, 0,
-                 dft_N - image.cols,
-                 BORDER_CONSTANT, Scalar::all(0));
-
-  // prepara a matriz complexa e preenche com 0
-  imaginaryInput = Mat(padded.size(), CV_32FC1, Scalar(0));
-
-  //Trasforma padded em float
-  padded.convertTo(padded, CV_32F);
-
-  normalize(padded, padded, 0.0, 1.0, NORM_MINMAX);
-
-  //Soma ambas as componentes com 1 para evitar a operação ln(0)
-  cv::log(padded + 1, padded);
-  cv::log(imaginaryInput + 1, imaginaryInput);
-
-  //Concatena plano real e imaginário para realizar a DFT
-  planos.push_back(padded);
-  planos.push_back(imaginaryInput);
-
-  merge(planos, complexImage);
-
-  // Construindo a função de transferência (filtro frequencial) com o
-  // mesmo tamanho e tipo da matriz complexa
-  filter = Mat((dft_M &amp; -2), (dft_N &amp; -2), CV_32FC2, Scalar(0, 0));
-
-  // Preenche o filtro homomórfico com os valores dadod pela função
-  for(int i=0; i&lt; dft_M; i++){
-    for(int j=0; j &lt; dft_N; j++){
-      float h = (float) (gH - gL)*(1.0 - exp(-c*(pow(abs(i-dft_M/2)+abs(j-dft_N/2), 2)/pow(d0, 2)))) + gL;
-      filter.at&lt;Vec2f&gt;(i, j)[0] = h;
-      filter.at&lt;Vec2f&gt;(i, j)[1] = h;
-    }
-  }
-
-  split(filter, filtros);
-  normalize(filtros[0], filter_print, 0.0, 1.0, NORM_MINMAX);
-  imshow("filtro", filter_print);
-
-  // Efetua a filtragem
-  dft(complexImage, complexImage);
-  trocaQuadrantes(complexImage);
-  mulSpectrums(complexImage,filter,complexImage,0);
-  trocaQuadrantes(complexImage);
-  idft(complexImage, complexImage, DFT_SCALE);
-
-  cv::exp(complexImage,complexImage);
-
-  planos.clear();
-  split(complexImage, planos);
-
-  // normaliza a parte real para exibicao
-  normalize(planos[0], tmp, 0.0, 1.0, NORM_MINMAX);
-  imshow("Imagem Final", tmp);
-  waitKey();
-  return 0;
-}</code></pre>
-</div>
-</div>
-<div class="imageblock data-line-822">
-<div class="content">
-<img src="./figuras/11.png" alt="11">
-</div>
-<div class="title">Figura 10. Resultado.</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1 data-line-825">
-<h2 id="_quantização_vetorial_com_k_means">8. Quantização vetorial com k-means</h2>
-<div class="sectionbody">
-<div class="sect2 data-line-826">
-<h3 id="_exercício_kmeans">8.1. Exercício Kmeans</h3>
-<div class="listingblock data-line-829">
-<div class="content">
-<pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;opencv2/opencv.hpp&gt;
-#include &lt;cstdlib&gt;
-#include &lt;vector&gt;
-#include &lt;iostream&gt;
-
-using namespace std;
-using namespace cv;
-
-int main( int argc, char** argv ){
-   int nClusters = 8, nRodadas = 1;
-
-  cv::Mat rotulos, centros;
-
-  if (argc != 3) {
-    std::cout &lt;&lt; "kmeans entrada.jpg saida.jpg\n";
-    exit(0);
-  }
-
-  cv::Mat img = cv::imread(argv[1], cv::IMREAD_COLOR);
-  cv::Mat samples(img.rows * img.cols, 3, CV_32F);
-
-  for (int y = 0; y &lt; img.rows; y++) {
-    for (int x = 0; x &lt; img.cols; x++) {
-      for (int z = 0; z &lt; 3; z++) {
-        samples.at&lt;float&gt;(y + x * img.rows, z) = img.at&lt;cv::Vec3b&gt;(y, x)[z];
-      }
-    }
-  }
-
-
-  //Executa o kmeans nExecucoes vezes, inserindo-os no vetor rotulada
-  vector&lt;Mat&gt; rotulada(10,  Mat(img.size(), img.type()) );
-  for(int i = 0; i&lt;10; i++){
-    kmeans(samples,
-          nClusters,
-          rotulos,
-          TermCriteria(TermCriteria::EPS|TermCriteria::COUNT, 10000, 0.0001),
-          nRodadas,
-          KMEANS_RANDOM_CENTERS,
-          centros );
-
-    for( int y = 0; y &lt; img.rows; y++ ){
-      for( int x = 0; x &lt; img.cols; x++ ){
-        int indice = rotulos.at&lt;int&gt;(y + x*img.rows,0);
-        rotulada.at(i).at&lt;Vec3b&gt;(y,x)[0] = (uchar) centros.at&lt;float&gt;(indice, 0);
-        rotulada.at(i).at&lt;Vec3b&gt;(y,x)[1] = (uchar) centros.at&lt;float&gt;(indice, 1);
-        rotulada.at(i).at&lt;Vec3b&gt;(y,x)[2] = (uchar) centros.at&lt;float&gt;(indice, 2);
-      }
-    }
-
-    imshow( "Imagem Final", rotulada.at(i) );
-    waitKey();
-    }
-}</code></pre>
-</div>
-</div>
-<div class="imageblock data-line-886">
-<div class="content">
-<img src="./figuras/1.png" alt="1">
-</div>
-<div class="title">Figura 11. Imagem 1</div>
-</div>
-<div class="imageblock data-line-887">
-<div class="content">
-<img src="./figuras/2.png" alt="2">
-</div>
-<div class="title">Figura 12. Imagem 2</div>
-</div>
-<div class="imageblock data-line-888">
-<div class="content">
-<img src="./figuras/3.png" alt="3">
-</div>
-<div class="title">Figura 13. Imagem 3</div>
-</div>
-<div class="imageblock data-line-889">
-<div class="content">
-<img src="./figuras/4.png" alt="4">
-</div>
-<div class="title">Figura 14. Imagem 4</div>
-</div>
-<div class="imageblock data-line-890">
-<div class="content">
-<img src="./figuras/5.png" alt="5">
-</div>
-<div class="title">Figura 15. Imagem 5</div>
-</div>
-<div class="imageblock data-line-891">
-<div class="content">
-<img src="./figuras/6.png" alt="6">
-</div>
-<div class="title">Figura 16. Imagem 6</div>
-</div>
-<div class="imageblock data-line-892">
-<div class="content">
-<img src="./figuras/7.png" alt="7">
-</div>
-<div class="title">Figura 17. Imagem 7</div>
-</div>
-<div class="imageblock data-line-893">
-<div class="content">
-<img src="./figuras/8.png" alt="8">
-</div>
-<div class="title">Figura 18. Imagem 8</div>
-</div>
-<div class="imageblock data-line-894">
-<div class="content">
-<img src="./figuras/9.png" alt="9">
-</div>
-<div class="title">Figura 19. Imagem 9</div>
-</div>
-<div class="imageblock data-line-895">
-<div class="content">
-<img src="./figuras/10.png" alt="10">
-</div>
-<div class="title">Figura 20. Imagem 10</div>
+<div class="paragraph data-line-200">
+<p>O exercício consistia em uma senoide com 4 periodos e uma aplitude de 127 desenhada na horizontal.</p>
 </div>
 </div>
 </div>
@@ -1485,7 +675,7 @@ int main( int argc, char** argv ){
 </div>
 <div id="footer">
 <div id="footer-text">
-Última atualização 2023-06-26 17:58:02 -0300
+Última atualização 2023-06-26 18:50:20 -0300
 </div>
 </div>
 <script type="text/x-mathjax-config">
