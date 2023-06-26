@@ -544,52 +544,51 @@ using namespace cv;
 using namespace std;
 
 int main(int, char**) {
-    Mat image, imageaux;
+    Mat imagem, imagemaux;
 
-    image = imread("golden.png", CV_LOAD_IMAGE_GRAYSCALE);
-    if (!image.data)
-        cout &lt;&lt; "nao abriu image.png" &lt;&lt; endl;
+    imagem = imread("Golden.png", CV_LOAD_IMAGE_GRAYSCALE);
+    if (!imagem.data)
+        cout &lt;&lt; "nao abriu " &lt;&lt; endl;
 
+    imagemaux = imread("Golden.png", CV_LOAD_IMAGE_GRAYSCALE);
 
-    imageaux = imread("golden.png", CV_LOAD_IMAGE_GRAYSCALE);
-    if (!imageaux.data)
-        cout &lt;&lt; "nao abriu image.png na auxiliar" &lt;&lt; endl;
+    imshow("Original", imagem);
 
-    for (int i = 0; i &lt; (image.size().height) / 2; i++) { //2 quad
-        for (int j = 0; j &lt; (image.size().width) / 2; j++) {
-            image.at&lt;uchar&gt;(i, j) = imageaux.at&lt;uchar&gt;(i + (image.size().height) / 2, j + (image.size().width) / 2);
+    for (int i = 0; i &lt; (imagem.size().height) / 2; i++) { //1 quadrante
+        for (int j = ((imagem.size().width) / 2); j &lt; imagem.size().width; j++) {
+            imagem.at&lt;uchar&gt;(i, j) = imagemaux.at&lt;uchar&gt;(i + (imagem.size().height) / 2, j - (imagem.size().width) / 2);
         }
     }
 
-    for (int i = (image.size().height) / 2; i &lt; (image.size().height); i++) { //3 quad
-        for (int j = 0; j &lt; (image.size().width) / 2; j++) {
-            image.at&lt;uchar&gt;(i, j) = imageaux.at&lt;uchar&gt;(i - (image.size().height) / 2, j + (image.size().width) / 2);
+    for (int i = 0; i &lt; (imagem.size().height) / 2; i++) { //2 quadrante
+        for (int j = 0; j &lt; (imagem.size().width) / 2; j++) {
+            imagem.at&lt;uchar&gt;(i, j) = imagemaux.at&lt;uchar&gt;(i + (imagem.size().height) / 2, j + (imagem.size().width) / 2);
         }
     }
 
-    for (int i = 0; i &lt; (image.size().height) / 2; i++) { //1 quad
-        for (int j = ((image.size().width) / 2); j &lt; image.size().width; j++) {
-            image.at&lt;uchar&gt;(i, j) = imageaux.at&lt;uchar&gt;(i + (image.size().height) / 2, j - (image.size().width) / 2);
+    for (int i = (imagem.size().height) / 2; i &lt; (imagem.size().height); i++) { //3 quadrante
+        for (int j = 0; j &lt; (imagem.size().width) / 2; j++) {
+            imagem.at&lt;uchar&gt;(i, j) = imagemaux.at&lt;uchar&gt;(i - (imagem.size().height) / 2, j + (imagem.size().width) / 2);
         }
     }
 
-    for (int i = (image.size().height) / 2; i &lt; (image.size().height); i++) { //4 quad
-        for (int j = ((image.size().width) / 2); j &lt; image.size().width; j++) {
-            image.at&lt;uchar&gt;(i, j) = imageaux.at&lt;uchar&gt;(i - (image.size().height) / 2, j - (image.size().width) / 2);
+
+    for (int i = (imagem.size().height) / 2; i &lt; (imagem.size().height); i++) { //4 quadrante
+        for (int j = ((imagem.size().width) / 2); j &lt; imagem.size().width; j++) {
+            imagem.at&lt;uchar&gt;(i, j) = imagemaux.at&lt;uchar&gt;(i - (imagem.size().height) / 2, j - (imagem.size().width) / 2);
         }
     }
 
-    //namedWindow("janela", WINDOW_AUTOSIZE);
-    imshow("Original", imageaux);
-    imshow("golden", image);
 
+    imshow("Trocada", imagem);
     waitKey();
+
 
     return 0;
 }</code></pre>
 </div>
 </div>
-<div class="imageblock data-line-140">
+<div class="imageblock data-line-139">
 <div class="content">
 <img src="./figuras/golden%20-%20troca%20de%20regiões.png" alt="golden   troca de regiões">
 </div>
@@ -598,21 +597,21 @@ int main(int, char**) {
 </div>
 </div>
 </div>
-<div class="sect1 data-line-142">
+<div class="sect1 data-line-141">
 <h2 id="_serialização_de_dados_em_ponto_flutuante_via_filestorage">3. Serialização de dados em ponto flutuante via FileStorage</h2>
 <div class="sectionbody">
-<div class="paragraph data-line-144">
+<div class="paragraph data-line-143">
 <p>Para realizar este exercício utilizamos como base o  filestorage.cpp, código que foi disponibilizado pelo professor.</p>
 </div>
-<div class="imageblock data-line-146">
+<div class="imageblock data-line-145">
 <div class="content">
 <img src="./figuras/Saida%20do%20programa%20filestorege.png" alt="Saida do programa filestorege">
 </div>
 <div class="title">Figura 4. Senoide gerada com 8 periodos</div>
 </div>
-<div class="sect2 data-line-148">
+<div class="sect2 data-line-147">
 <h3 id="_exercício">3.1. Exercício</h3>
-<div class="listingblock data-line-151">
+<div class="listingblock data-line-150">
 <div class="content">
 <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
 #include &lt;opencv2/opencv.hpp&gt;
@@ -660,13 +659,13 @@ int main(int argc, char** argv) {
 }</code></pre>
 </div>
 </div>
-<div class="imageblock data-line-198">
+<div class="imageblock data-line-197">
 <div class="content">
 <img src="./figuras/senoide.png" alt="senoide">
 </div>
 <div class="title">Figura 5. Resultado do Filestorege</div>
 </div>
-<div class="paragraph data-line-200">
+<div class="paragraph data-line-199">
 <p>O exercício consistia em uma senoide com 4 periodos e uma aplitude de 127 desenhada na horizontal.</p>
 </div>
 </div>
@@ -675,7 +674,7 @@ int main(int argc, char** argv) {
 </div>
 <div id="footer">
 <div id="footer-text">
-Última atualização 2023-06-26 18:50:20 -0300
+Última atualização 2023-06-26 19:05:51 -0300
 </div>
 </div>
 <script type="text/x-mathjax-config">
