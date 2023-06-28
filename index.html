@@ -572,7 +572,7 @@ using namespace std;
 
 int main(int, char**) {
     Mat imagem, imagemaux;
-
+// acesso da imagem original e convertendo em tons de cinza
     imagem = imread("Golden.png", CV_LOAD_IMAGE_GRAYSCALE);
     if (!imagem.data)
         cout &lt;&lt; "nao abriu " &lt;&lt; endl;
@@ -753,7 +753,7 @@ int main(int argc, char** argv) {
     width = cap.get(CV_CAP_PROP_FRAME_WIDTH);
     height = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
 
-    // Retorna a autira e largura da imagem que ta sendo capturada
+    // Retorna a altura e largura da imagem que ta sendo capturada
     cout &lt;&lt; "largura = " &lt;&lt; width &lt;&lt; endl;
     cout &lt;&lt; "altura  = " &lt;&lt; height &lt;&lt; endl;
 
@@ -772,12 +772,15 @@ int main(int argc, char** argv) {
         equalizeHist(planes[2], planeseq[2]);
         merge(planes, imagem);
         merge(planeseq, imageeq);
+        // calculo da vermelha
         calcHist(&amp;planes[0], 1, 0, Mat(), histR, 1,
             &amp;nbins, &amp;histrange,
             uniform, acummulate);
+        // calculo da verde
         calcHist(&amp;planes[1], 1, 0, Mat(), histG, 1,
             &amp;nbins, &amp;histrange,
             uniform, acummulate);
+        // calculo da azul
         calcHist(&amp;planes[2], 1, 0, Mat(), histB, 1,
             &amp;nbins, &amp;histrange,
             uniform, acummulate);
@@ -807,14 +810,17 @@ int main(int argc, char** argv) {
         histImgR.copyTo(imagem(Rect(0, 0, nbins, histh)));
         histImgG.copyTo(imagem(Rect(0, histh, nbins, histh)));
         histImgB.copyTo(imagem(Rect(0, 2 * histh, nbins, histh)));
-        imshow("image", imagem);
-
+        imshow("imagem", imagem);
+        // Imagem equalizada
+        // calculo da vermelha
         calcHist(&amp;planeseq[0], 1, 0, Mat(), histR, 1,
             &amp;nbins, &amp;histrange,
             uniform, acummulate);
+        // calculo da verde
         calcHist(&amp;planeseq[1], 1, 0, Mat(), histG, 1,
             &amp;nbins, &amp;histrange,
             uniform, acummulate);
+        // calculo da azul
         calcHist(&amp;planeseq[2], 1, 0, Mat(), histB, 1,
             &amp;nbins, &amp;histrange,
             uniform, acummulate);
@@ -851,22 +857,22 @@ int main(int argc, char** argv) {
 }</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-342">
+<div class="paragraph data-line-348">
 <p>imagem antes e depois da equalização, vemos uma certa melhora na qualidade e uma definição de cores mais acentuada.</p>
 </div>
-<div class="imageblock data-line-344">
+<div class="imageblock data-line-350">
 <div class="content">
 <img src="./figuras/kiki.png" alt="kiki">
 </div>
 <div class="title">Figura 6. Histograma</div>
 </div>
 </div>
-<div class="sect2 data-line-346">
+<div class="sect2 data-line-352">
 <h3 id="_detector_de_movimento">6.2. Detector de movimento</h3>
-<div class="paragraph data-line-347">
+<div class="paragraph data-line-353">
 <p>Este código mostra a detecção de movimento</p>
 </div>
-<div class="listingblock data-line-350">
+<div class="listingblock data-line-356">
 <div class="content">
 <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
 #include &lt;opencv2/opencv.hpp&gt;
@@ -898,7 +904,7 @@ int main(int argc, char** argv) {
     width = cap.get(CV_CAP_PROP_FRAME_WIDTH);
     height = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
 
-    // Retorna a autira e largura da imagem que ta sendo capturada
+    // Retorna a altura e largura da imagem que ta sendo capturada
     cout &lt;&lt; "largura = " &lt;&lt; width &lt;&lt; endl;
     cout &lt;&lt; "altura  = " &lt;&lt; height &lt;&lt; endl;
 
@@ -931,10 +937,10 @@ int main(int argc, char** argv) {
 }</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-414">
+<div class="paragraph data-line-420">
 <p>A imagem a seguir mostra a detecção de movimento, feita por meio da variação do histrograma.</p>
 </div>
-<div class="imageblock data-line-416">
+<div class="imageblock data-line-422">
 <div class="content">
 <img src="./figuras/detector.png" alt="detector">
 </div>
@@ -943,38 +949,38 @@ int main(int argc, char** argv) {
 </div>
 </div>
 </div>
-<div class="sect1 data-line-418">
+<div class="sect1 data-line-424">
 <h2 id="_filtragem_no_domínio_espacial_i">7. Filtragem no domínio espacial I</h2>
 <div class="sectionbody">
-<div class="paragraph data-line-420">
+<div class="paragraph data-line-426">
 <p>Em construção&#8230;&#8203;</p>
 </div>
 </div>
 </div>
-<div class="sect1 data-line-422">
+<div class="sect1 data-line-428">
 <h2 id="_filtragem_no_domínio_espacial_ii">8. Filtragem no domínio espacial II</h2>
 <div class="sectionbody">
-<div class="paragraph data-line-424">
+<div class="paragraph data-line-430">
 <p>Em construção&#8230;&#8203;</p>
 </div>
 </div>
 </div>
-<h1 id="_parte_ii_processamento_de_imagens_no_domínio_da_frequência" class="sect0 data-line-426">Parte II: Processamento de Imagens no Domínio da Frequência</h1>
-<div class="sect1 data-line-429">
+<h1 id="_parte_ii_processamento_de_imagens_no_domínio_da_frequência" class="sect0 data-line-432">Parte II: Processamento de Imagens no Domínio da Frequência</h1>
+<div class="sect1 data-line-435">
 <h2 id="_a_tranformada_discreta_de_fourier">9. A Tranformada Discreta de Fourier</h2>
 <div class="sectionbody">
-<div class="paragraph data-line-431">
+<div class="paragraph data-line-437">
 <p>Em construção&#8230;&#8203;</p>
 </div>
 </div>
 </div>
-<div class="sect1 data-line-433">
+<div class="sect1 data-line-439">
 <h2 id="_filtragem_no_domínio_da_frequência">10. Filtragem no Domínio da Frequência</h2>
 <div class="sectionbody">
-<div class="paragraph data-line-435">
-<p>Esse filtro tem como finalidade corrigir imagens com iluminação irregular, nele podemos corrigir os parâmetros de iluminação para que fique da melhor forma possível.</p>
+<div class="paragraph data-line-441">
+<p>Esse filtro tem como finalidade de corrigir imagens com iluminação irregular, nele podemos corrigir os parâmetros de gamma, contraste para que fique da melhor forma possível.</p>
 </div>
-<div class="listingblock data-line-438">
+<div class="listingblock data-line-444">
 <div class="content">
 <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
 #include &lt;opencv2/opencv.hpp&gt;
@@ -1160,16 +1166,16 @@ int main(int argvc, char** argv) {
 }</code></pre>
 </div>
 </div>
-<div class="imageblock data-line-622">
+<div class="imageblock data-line-628">
 <div class="content">
 <img src="./figuras/original%20homo.png" alt="original homo">
 </div>
 <div class="title">Figura 8. Imagem original Homomórfico</div>
 </div>
-<div class="paragraph data-line-624">
+<div class="paragraph data-line-630">
 <p>Imagem com as configurações dos filtros para correção</p>
 </div>
-<div class="imageblock data-line-626">
+<div class="imageblock data-line-632">
 <div class="content">
 <img src="./figuras/filtro%20homomorfico.png" alt="filtro homomorfico">
 </div>
@@ -1177,47 +1183,16 @@ int main(int argvc, char** argv) {
 </div>
 </div>
 </div>
-<h1 id="_parte_iii_segmentação_de_imagens" class="sect0 data-line-629">Parte III: Segmentação de imagens</h1>
-<div class="sect1 data-line-631">
+<h1 id="_parte_iii_segmentação_de_imagens" class="sect0 data-line-635">Parte III: Segmentação de imagens</h1>
+<div class="sect1 data-line-637">
 <h2 id="_detecção_de_bordas_com_o_algoritmo_de_canny">11. Detecção de bordas com o algoritmo de Canny</h2>
 <div class="sectionbody">
-<div class="listingblock data-line-634">
+<div class="listingblock data-line-640">
 <div class="content">
-<pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
-#include "opencv2/opencv.hpp"
-
-int top_slider = 10;
-int top_slider_max = 200;
-
-char TrackbarName[50];
-
-cv::Mat image, border;
-
-void on_trackbar_canny(int, void) {
-    cv::Canny(image, border, top_slider, 3 top_slider);
-    cv::imshow("Canny", border);
-}
-
-int main(int argc, char** argv) {
-    image = cv::imread("Golden.png", cv::IMREAD_GRAYSCALE);
-
-    printf(TrackbarName, "Threshold inferior", top_slider_max);
-
-    cv::namedWindow("Canny", 1);
-    cv::createTrackbar(TrackbarName, "Canny",
-        &amp;top_slider,
-        top_slider_max,
-        on_trackbar_canny);
-
-    on_trackbar_canny(top_slider, 0);
-
-    cv::waitKey();
-    cv::imwrite("cannyborders.png", border);
-    return 0;
-}</code></pre>
+<pre class="highlight"><code class="language-cpp" data-lang="cpp"></code></pre>
 </div>
 </div>
-<div class="imageblock data-line-671">
+<div class="imageblock data-line-644">
 <div class="content">
 <img src="./figuras/canny.png" alt="canny">
 </div>
@@ -1225,19 +1200,19 @@ int main(int argc, char** argv) {
 </div>
 </div>
 </div>
-<div class="sect1 data-line-673">
+<div class="sect1 data-line-646">
 <h2 id="_quantização_vetorial_com_k_means">12. Quantização vetorial com k-means</h2>
 <div class="sectionbody">
-<div class="paragraph data-line-675">
+<div class="paragraph data-line-648">
 <p>Em construção&#8230;&#8203;</p>
 </div>
 </div>
 </div>
-<h1 id="_parte_iv_outras_transformadas_matemáticas" class="sect0 data-line-677">Parte IV: Outras Transformadas Matemáticas</h1>
-<div class="sect1 data-line-679">
+<h1 id="_parte_iv_outras_transformadas_matemáticas" class="sect0 data-line-650">Parte IV: Outras Transformadas Matemáticas</h1>
+<div class="sect1 data-line-652">
 <h2 id="_filtragem_de_forma_com_morfologia_matemática">13. Filtragem de forma com morfologia matemática</h2>
 <div class="sectionbody">
-<div class="paragraph data-line-681">
+<div class="paragraph data-line-654">
 <p>Em construção&#8230;&#8203;</p>
 </div>
 </div>
@@ -1245,7 +1220,7 @@ int main(int argc, char** argv) {
 </div>
 <div id="footer">
 <div id="footer-text">
-Última atualização 2023-06-28 16:01:33 -0300
+Last updated 2023-06-28 16:15:33 -0300
 </div>
 </div>
 <script type="text/x-mathjax-config">
