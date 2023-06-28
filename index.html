@@ -458,6 +458,33 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_exercício">3.1. Exercício</a></li>
 </ul>
 </li>
+<li><a href="#_decomposição_de_imagens_em_planos_de_bits">4. Decomposição de imagens em planos de bits</a></li>
+<li><a href="#_preenchendo_regiões">5. Preenchendo regiões</a></li>
+<li><a href="#_manipulação_de_histogramas">6. Manipulação de histogramas</a>
+<ul class="sectlevel2">
+<li><a href="#_equalizador">6.1. Equalizador</a></li>
+<li><a href="#_detector_de_movimento">6.2. Detector de movimento</a></li>
+</ul>
+</li>
+<li><a href="#_filtragem_no_domínio_espacial_i">7. Filtragem no domínio espacial I</a></li>
+<li><a href="#_filtragem_no_domínio_espacial_ii">8. Filtragem no domínio espacial II</a></li>
+<li><a href="#_parte_ii_processamento_de_imagens_no_domínio_da_frequência">Parte II: Processamento de Imagens no Domínio da Frequência</a>
+<ul class="sectlevel1">
+<li><a href="#_a_tranformada_discreta_de_fourier">9. A Tranformada Discreta de Fourier</a></li>
+<li><a href="#_filtragem_no_domínio_da_frequência">10. Filtragem no Domínio da Frequência</a></li>
+</ul>
+</li>
+<li><a href="#_parte_iii_segmentação_de_imagens">Parte III: Segmentação de imagens</a>
+<ul class="sectlevel1">
+<li><a href="#_detecção_de_bordas_com_o_algoritmo_de_canny">11. Detecção de bordas com o algoritmo de Canny</a></li>
+<li><a href="#_quantização_vetorial_com_k_means">12. Quantização vetorial com k-means</a></li>
+</ul>
+</li>
+<li><a href="#_parte_iv_outras_transformadas_matemáticas">Parte IV: Outras Transformadas Matemáticas</a>
+<ul class="sectlevel1">
+<li><a href="#_filtragem_de_forma_com_morfologia_matemática">13. Filtragem de forma com morfologia matemática</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -671,10 +698,554 @@ int main(int argc, char** argv) {
 </div>
 </div>
 </div>
+<div class="sect1 data-line-201">
+<h2 id="_decomposição_de_imagens_em_planos_de_bits">4. Decomposição de imagens em planos de bits</h2>
+<div class="sectionbody">
+<div class="paragraph data-line-203">
+<p>Em construção&#8230;&#8203;</p>
+</div>
+</div>
+</div>
+<div class="sect1 data-line-205">
+<h2 id="_preenchendo_regiões">5. Preenchendo regiões</h2>
+<div class="sectionbody">
+<div class="paragraph data-line-207">
+<p>Em construção&#8230;&#8203;</p>
+</div>
+</div>
+</div>
+<div class="sect1 data-line-209">
+<h2 id="_manipulação_de_histogramas">6. Manipulação de histogramas</h2>
+<div class="sectionbody">
+<div class="sect2 data-line-211">
+<h3 id="_equalizador">6.1. Equalizador</h3>
+<div class="paragraph data-line-212">
+<p>Este programa tem como finalidade equalizar o histograma de imagem capturadas por câmeras com iluminação variada.</p>
+</div>
+<div class="listingblock data-line-215">
+<div class="content">
+<pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
+#include &lt;opencv2/opencv.hpp&gt;
+
+using namespace cv;
+using namespace std;
+
+int main(int argc, char** argv) {
+    Mat imagem, imageeq;
+    int width, height;
+    VideoCapture cap;
+    vector&lt;Mat&gt; planes, planeseq;
+    Mat histR, histG, histB;
+    int nbins = 64;
+    float range[] = { 0, 256 };
+    const float* histrange = { range };
+    bool uniform = true;
+    bool acummulate = false;
+
+    cap.open(0);
+
+    // verificação da entrada da camera se esta ou não conectada
+    if (!cap.isOpened()) {
+        cout &lt;&lt; "cameras indisponiveis";
+        return -1;
+    }
+
+    width = cap.get(CV_CAP_PROP_FRAME_WIDTH);
+    height = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+
+    // Retorna a autira e largura da imagem que ta sendo capturada
+    cout &lt;&lt; "largura = " &lt;&lt; width &lt;&lt; endl;
+    cout &lt;&lt; "altura  = " &lt;&lt; height &lt;&lt; endl;
+
+    int histw = nbins, histh = nbins / 2;
+    Mat histImgR(histh, histw, CV_8UC3, Scalar(0, 0, 0));
+    Mat histImgG(histh, histw, CV_8UC3, Scalar(0, 0, 0));
+    Mat histImgB(histh, histw, CV_8UC3, Scalar(0, 0, 0));
+
+    while (1) {
+        cap &gt;&gt; imagem;
+        split(imagem, planes);
+        split(imagem, planeseq);
+        //EQUALIZACAO
+        equalizeHist(planes[0], planeseq[0]);
+        equalizeHist(planes[1], planeseq[1]);
+        equalizeHist(planes[2], planeseq[2]);
+        merge(planes, imagem);
+        merge(planeseq, imageeq);
+        calcHist(&amp;planes[0], 1, 0, Mat(), histR, 1,
+            &amp;nbins, &amp;histrange,
+            uniform, acummulate);
+        calcHist(&amp;planes[1], 1, 0, Mat(), histG, 1,
+            &amp;nbins, &amp;histrange,
+            uniform, acummulate);
+        calcHist(&amp;planes[2], 1, 0, Mat(), histB, 1,
+            &amp;nbins, &amp;histrange,
+            uniform, acummulate);
+
+        normalize(histR, histR, 0, histImgR.rows, NORM_MINMAX, -1, Mat());
+        normalize(histG, histG, 0, histImgG.rows, NORM_MINMAX, -1, Mat());
+        normalize(histB, histB, 0, histImgB.rows, NORM_MINMAX, -1, Mat());
+
+        histImgR.setTo(Scalar(0));
+        histImgG.setTo(Scalar(0));
+        histImgB.setTo(Scalar(0));
+
+        for (int i = 0; i &lt; nbins; i++) {
+            line(histImgR,
+                Point(i, histh),
+                Point(i, histh - cvRound(histR.at&lt;float&gt;(i))),
+                Scalar(0, 0, 255), 1, 8, 0);
+            line(histImgG,
+                Point(i, histh),
+                Point(i, histh - cvRound(histG.at&lt;float&gt;(i))),
+                Scalar(0, 255, 0), 1, 8, 0);
+            line(histImgB,
+                Point(i, histh),
+                Point(i, histh - cvRound(histB.at&lt;float&gt;(i))),
+                Scalar(255, 0, 0), 1, 8, 0);
+        }
+        histImgR.copyTo(imagem(Rect(0, 0, nbins, histh)));
+        histImgG.copyTo(imagem(Rect(0, histh, nbins, histh)));
+        histImgB.copyTo(imagem(Rect(0, 2 * histh, nbins, histh)));
+        imshow("image", imagem);
+
+        calcHist(&amp;planeseq[0], 1, 0, Mat(), histR, 1,
+            &amp;nbins, &amp;histrange,
+            uniform, acummulate);
+        calcHist(&amp;planeseq[1], 1, 0, Mat(), histG, 1,
+            &amp;nbins, &amp;histrange,
+            uniform, acummulate);
+        calcHist(&amp;planeseq[2], 1, 0, Mat(), histB, 1,
+            &amp;nbins, &amp;histrange,
+            uniform, acummulate);
+
+        normalize(histR, histR, 0, histImgR.rows, NORM_MINMAX, -1, Mat());
+        normalize(histG, histG, 0, histImgG.rows, NORM_MINMAX, -1, Mat());
+        normalize(histB, histB, 0, histImgB.rows, NORM_MINMAX, -1, Mat());
+
+        histImgR.setTo(Scalar(0));
+        histImgG.setTo(Scalar(0));
+        histImgB.setTo(Scalar(0));
+
+        for (int i = 0; i &lt; nbins; i++) {
+            line(histImgR,
+                Point(i, histh),
+                Point(i, histh - cvRound(histR.at&lt;float&gt;(i))),
+                Scalar(0, 0, 255), 1, 8, 0);
+            line(histImgG,
+                Point(i, histh),
+                Point(i, histh - cvRound(histG.at&lt;float&gt;(i))),
+                Scalar(0, 255, 0), 1, 8, 0);
+            line(histImgB,
+                Point(i, histh),
+                Point(i, histh - cvRound(histB.at&lt;float&gt;(i))),
+                Scalar(255, 0, 0), 1, 8, 0);
+        }
+        histImgR.copyTo(imageeq(Rect(0, 0, nbins, histh)));
+        histImgG.copyTo(imageeq(Rect(0, histh, nbins, histh)));
+        histImgB.copyTo(imageeq(Rect(0, 2 * histh, nbins, histh)));
+        imshow("imageeq", imageeq);
+        if (waitKey(30) &gt;= 0) break;
+    }
+    return 0;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph data-line-342">
+<p>imagem antes e depois da equalização, vemos uma certa melhora na qualidade e uma definição de cores mais acentuada.</p>
+</div>
+<div class="imageblock data-line-344">
+<div class="content">
+<img src="./figuras/kiki.png" alt="kiki">
+</div>
+<div class="title">Figura 6. Histograma</div>
+</div>
+</div>
+<div class="sect2 data-line-346">
+<h3 id="_detector_de_movimento">6.2. Detector de movimento</h3>
+<div class="paragraph data-line-347">
+<p>Este código mostra a detecção de movimento</p>
+</div>
+<div class="listingblock data-line-350">
+<div class="content">
+<pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
+#include &lt;opencv2/opencv.hpp&gt;
+
+using namespace cv;
+using namespace std;
+
+int main(int argc, char** argv) {
+    Mat imagem;
+    int width, height;
+    VideoCapture cap;
+    vector&lt;Mat&gt; planes;
+    Mat histR, histG, histB;
+    int nbins = 64;
+    float range[] = { 0, 256 };
+    const float* histrange = { range };
+    bool uniform = true;
+    bool acummulate = false;
+    float dif;
+
+    cap.open(0);
+
+    // verificação da entrada da camera se esta ou não conectada
+    if (!cap.isOpened()) {
+        cout &lt;&lt; "cameras indisponiveis";
+        return -1;
+    }
+
+    width = cap.get(CV_CAP_PROP_FRAME_WIDTH);
+    height = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+
+    // Retorna a autira e largura da imagem que ta sendo capturada
+    cout &lt;&lt; "largura = " &lt;&lt; width &lt;&lt; endl;
+    cout &lt;&lt; "altura  = " &lt;&lt; height &lt;&lt; endl;
+
+    int histw = nbins, histh = nbins / 2;
+    Mat histImgR(histh, histw, CV_8UC3, Scalar(0, 0, 0));
+    Mat histImgG(histh, histw, CV_8UC3, Scalar(0, 0, 0));
+    Mat histImgB(histh, histw, CV_8UC3, Scalar(0, 0, 0));
+
+    while (1) {
+        cap &gt;&gt; imagem;
+        split(imagem, planes);
+        calcHist(&amp;planes[0], 1, 0, Mat(), histR, 1,
+            &amp;nbins, &amp;histrange,
+            uniform, acummulate);
+        cap &gt;&gt; imagem;
+        split(imagem, planes);
+        calcHist(&amp;planes[0], 1, 0, Mat(), histG, 1,
+            &amp;nbins, &amp;histrange,
+            uniform, acummulate);
+        dif = compareHist(histR, histG, CV_COMP_CORREL);
+        //cout &lt;&lt; "diferenca: " &lt;&lt; dif &lt;&lt; endl;
+        if (dif &lt;= 0.96) {
+            putText(imagem, "MOVIMENTO DETECTADO", Point(width / 2 - 200, height / 2), FONT_HERSHEY_SIMPLEX, 1, Scalar(0, 0, 255), 2);
+        }
+
+        imshow("imagem", imagem);
+        if (waitKey(30) &gt;= 0) break;
+    }
+    return 0;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph data-line-414">
+<p>A imagem a seguir mostra a detecção de movimento, feita por meio da variação do histrograma.</p>
+</div>
+<div class="imageblock data-line-416">
+<div class="content">
+<img src="./figuras/detector.png" alt="detector">
+</div>
+<div class="title">Figura 7. Histograma</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1 data-line-418">
+<h2 id="_filtragem_no_domínio_espacial_i">7. Filtragem no domínio espacial I</h2>
+<div class="sectionbody">
+<div class="paragraph data-line-420">
+<p>Em construção&#8230;&#8203;</p>
+</div>
+</div>
+</div>
+<div class="sect1 data-line-422">
+<h2 id="_filtragem_no_domínio_espacial_ii">8. Filtragem no domínio espacial II</h2>
+<div class="sectionbody">
+<div class="paragraph data-line-424">
+<p>Em construção&#8230;&#8203;</p>
+</div>
+</div>
+</div>
+<h1 id="_parte_ii_processamento_de_imagens_no_domínio_da_frequência" class="sect0 data-line-426">Parte II: Processamento de Imagens no Domínio da Frequência</h1>
+<div class="sect1 data-line-429">
+<h2 id="_a_tranformada_discreta_de_fourier">9. A Tranformada Discreta de Fourier</h2>
+<div class="sectionbody">
+<div class="paragraph data-line-431">
+<p>Em construção&#8230;&#8203;</p>
+</div>
+</div>
+</div>
+<div class="sect1 data-line-433">
+<h2 id="_filtragem_no_domínio_da_frequência">10. Filtragem no Domínio da Frequência</h2>
+<div class="sectionbody">
+<div class="paragraph data-line-435">
+<p>Esse filtro tem como finalidade corrigir imagens com iluminação irregular, nele podemos corrigir os parâmetros de iluminação para que fique da melhor forma possível.</p>
+</div>
+<div class="listingblock data-line-438">
+<div class="content">
+<pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
+#include &lt;opencv2/opencv.hpp&gt;
+#include &lt;math.h&gt;
+
+using namespace cv;
+using namespace std;
+
+
+float MAX = 100.0;
+
+
+//-------PARAMETROS DO FILTRO
+float gammal = 0;
+float max_gammal = 100;
+int gammal_slider = 0;
+
+int d0_slider = 0;
+float max_d0 = 256;
+float d0 = 0;
+
+float gammah = 0;
+float max_gammah = 100;
+int gammah_slider = 0;
+
+float c = 0;
+float max_c = 100;
+int c_slider = 0;
+//-------
+
+Mat image, imageDft, padded;
+
+// valores ideais dos tamanhos da imagem
+// para calculo da DFT
+int dft_M, dft_N;
+
+
+char TrackbarName[50];
+
+// troca os quadrantes da imagem da DFT
+void deslocaDFT(Mat&amp; image) {
+    Mat tmp, A, B, C, D;
+
+    // se a imagem tiver tamanho impar, recorta a regiao para
+    // evitar cópias de tamanho desigual
+    image = image(Rect(0, 0, image.cols &amp; -2, image.rows &amp; -2));
+    int cx = image.cols / 2;
+    int cy = image.rows / 2;
+
+    // reorganiza os quadrantes da transformada
+    // A B   -&gt;  D C
+    // C D       B A
+    A = image(Rect(0, 0, cx, cy));
+    B = image(Rect(cx, 0, cx, cy));
+    C = image(Rect(0, cy, cx, cy));
+    D = image(Rect(cx, cy, cx, cy));
+
+    // A &lt;-&gt; D
+    A.copyTo(tmp);  D.copyTo(A);  tmp.copyTo(D);
+
+    // C &lt;-&gt; B
+    C.copyTo(tmp);  B.copyTo(C);  tmp.copyTo(B);
+}
+
+void applyFilter() {
+    Mat filter = Mat(padded.size(), CV_32FC2, Scalar(0));
+    Mat tmp = Mat(dft_M, dft_N, CV_32F);
+
+    for (int i = 0; i &lt; dft_M; i++) {
+        for (int j = 0; j &lt; dft_N; j++) {
+            //calculo do filtro homomorfico
+            float d2 = pow(i - dft_M / 2.0, 2) + pow(j - dft_N / 2.0, 2);
+            float exp = -c * (d2 / pow(d0, 2));
+            float valor = (gammah - gammal) * (1 - expf(exp)) + gammal;
+            tmp.at&lt;float&gt;(i, j) = valor;
+        }
+    }
+
+    Mat comps[] = { tmp, tmp };
+    merge(comps, 2, filter);
+
+    Mat dftClone = imageDft.clone();
+
+    mulSpectrums(dftClone, filter, dftClone, 0);
+
+    deslocaDFT(dftClone);
+
+    idft(dftClone, dftClone);
+
+    vector&lt;Mat&gt; planos;
+
+    split(dftClone, planos);
+
+    normalize(planos[0], planos[0], 0, 1, CV_MINMAX);
+
+    imshow("Homomorfico", planos[0]);
+    imshow("Original", image);
+}
+
+void on_trackbar_gammal(int, void*) {
+    gammal = (float)gammal_slider;
+    gammal = max_gammal * gammal / MAX;
+    applyFilter();
+}
+
+void on_trackbar_d0(int, void*) {
+    d0 = d0_slider * max_d0 / MAX;
+    applyFilter();
+}
+
+void on_trackbar_gammah(int, void*) {
+    gammah = gammah_slider * max_gammah / MAX;
+    applyFilter();
+}
+
+void on_trackbar_c(int, void*) {
+    c = c_slider * max_c / MAX;
+    applyFilter();
+}
+
+int main(int argvc, char** argv) {
+    image = imread("Golden.png", CV_LOAD_IMAGE_GRAYSCALE);
+
+
+
+    // identifica os tamanhos otimos para
+    // calculo do FFT
+    dft_M = getOptimalDFTSize(image.rows);
+    dft_N = getOptimalDFTSize(image.cols);
+
+    // realiza o padding da imagem
+    Mat_&lt;float&gt; zeros;
+    copyMakeBorder(image, padded, 0,
+        dft_M - image.rows, 0,
+        dft_N - image.cols,
+        BORDER_CONSTANT, Scalar::all(0));
+
+    // parte imaginaria da matriz complexa (preenchida com zeros)
+    zeros = Mat_&lt;float&gt;::zeros(padded.size());
+
+    // prepara a matriz complexa para ser preenchida
+    imageDft = Mat(padded.size(), CV_32FC2, Scalar(0));
+
+    copyMakeBorder(image, padded, 0,
+        dft_M - image.rows, 0,
+        dft_N - image.cols,
+        BORDER_CONSTANT, Scalar::all(0));
+
+    Mat_&lt;float&gt; realInput = Mat_&lt;float&gt;(padded);
+
+    // insere as duas componentes no array de matrizes
+    vector&lt;Mat&gt; planos;
+    planos.push_back(realInput);
+    planos.push_back(zeros);
+
+    // combina o array de matrizes em uma unica
+    // componente complexa
+    merge(planos, imageDft);
+
+    // calcula o dft
+    dft(imageDft, imageDft);
+    deslocaDFT(imageDft);
+
+    namedWindow("Homomorfico", 1);
+
+    sprintf_s(TrackbarName, "Gamma High");
+    createTrackbar(TrackbarName, "Homomorfico", &amp;gammah_slider, MAX, on_trackbar_gammah);
+
+    sprintf_s(TrackbarName, "Gamma Low");
+    createTrackbar(TrackbarName, "Homomorfico", &amp;gammal_slider, MAX, on_trackbar_gammal);
+
+    sprintf_s(TrackbarName, "C");
+    createTrackbar(TrackbarName, "Homomorfico", &amp;c_slider, MAX, on_trackbar_c);
+
+    sprintf_s(TrackbarName, "Cutoff D0");
+    createTrackbar(TrackbarName, "Homomorfico", &amp;d0_slider, MAX, on_trackbar_d0);
+
+
+    applyFilter();
+    waitKey(0);
+
+    return 0;
+}</code></pre>
+</div>
+</div>
+<div class="imageblock data-line-622">
+<div class="content">
+<img src="./figuras/original%20homo.png" alt="original homo">
+</div>
+<div class="title">Figura 8. Imagem original Homomórfico</div>
+</div>
+<div class="paragraph data-line-624">
+<p>Imagem com as configurações dos filtros para correção</p>
+</div>
+<div class="imageblock data-line-626">
+<div class="content">
+<img src="./figuras/filtro%20homomorfico.png" alt="filtro homomorfico">
+</div>
+<div class="title">Figura 9. Imagem filtro Homomórfico</div>
+</div>
+</div>
+</div>
+<h1 id="_parte_iii_segmentação_de_imagens" class="sect0 data-line-629">Parte III: Segmentação de imagens</h1>
+<div class="sect1 data-line-631">
+<h2 id="_detecção_de_bordas_com_o_algoritmo_de_canny">11. Detecção de bordas com o algoritmo de Canny</h2>
+<div class="sectionbody">
+<div class="listingblock data-line-634">
+<div class="content">
+<pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
+#include "opencv2/opencv.hpp"
+
+int top_slider = 10;
+int top_slider_max = 200;
+
+char TrackbarName[50];
+
+cv::Mat image, border;
+
+void on_trackbar_canny(int, void) {
+    cv::Canny(image, border, top_slider, 3 top_slider);
+    cv::imshow("Canny", border);
+}
+
+int main(int argc, char** argv) {
+    image = cv::imread("Golden.png", cv::IMREAD_GRAYSCALE);
+
+    printf(TrackbarName, "Threshold inferior", top_slider_max);
+
+    cv::namedWindow("Canny", 1);
+    cv::createTrackbar(TrackbarName, "Canny",
+        &amp;top_slider,
+        top_slider_max,
+        on_trackbar_canny);
+
+    on_trackbar_canny(top_slider, 0);
+
+    cv::waitKey();
+    cv::imwrite("cannyborders.png", border);
+    return 0;
+}</code></pre>
+</div>
+</div>
+<div class="imageblock data-line-671">
+<div class="content">
+<img src="./figuras/canny.png" alt="canny">
+</div>
+<div class="title">Figura 10. bordas de Canny</div>
+</div>
+</div>
+</div>
+<div class="sect1 data-line-673">
+<h2 id="_quantização_vetorial_com_k_means">12. Quantização vetorial com k-means</h2>
+<div class="sectionbody">
+<div class="paragraph data-line-675">
+<p>Em construção&#8230;&#8203;</p>
+</div>
+</div>
+</div>
+<h1 id="_parte_iv_outras_transformadas_matemáticas" class="sect0 data-line-677">Parte IV: Outras Transformadas Matemáticas</h1>
+<div class="sect1 data-line-679">
+<h2 id="_filtragem_de_forma_com_morfologia_matemática">13. Filtragem de forma com morfologia matemática</h2>
+<div class="sectionbody">
+<div class="paragraph data-line-681">
+<p>Em construção&#8230;&#8203;</p>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Última atualização 2023-06-26 19:13:32 -0300
+Última atualização 2023-06-28 16:01:33 -0300
 </div>
 </div>
 <script type="text/x-mathjax-config">
