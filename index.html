@@ -710,19 +710,128 @@ int main(int argc, char** argv) {
 <h2 id="_preenchendo_regiões">5. Preenchendo regiões</h2>
 <div class="sectionbody">
 <div class="paragraph data-line-207">
-<p>Em construção&#8230;&#8203;</p>
+<p>Uma das utilizações do processamento digital de imagens é contar e identificar objetos presentes na cena. Contamos os objetos nas imagens identificando aglomerados de pixels.
+Para o funcionamento desse algoritmo rotulamos a imagem com um tom de cinza, com isso, analisamos onde existem aglomerados de pixel, assim rotulamos cada aglomerado desse com um tom de cinza diferente, no final contamos quantos aglomerados encontramos.</p>
+</div>
+<div class="imageblock data-line-210">
+<div class="content">
+<img src="./figuras/bolhas.png" alt="bolhas">
+</div>
+<div class="title">Figura 6. Imagem a ser preenchida</div>
+</div>
+<div class="listingblock data-line-213">
+<div class="content">
+<pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
+#include &lt;opencv2/opencv.hpp&gt;
+
+using namespace cv;
+
+int main(int argc, char** argv) {
+    cv::Mat image, realce;
+    int width, height;
+    int nobjects, comBolhas;
+
+    cv::Point p;
+    image = cv::imread("bolhas.png", cv::IMREAD_GRAYSCALE);
+
+    if (!image.data) {
+        std::cout &lt;&lt; "imagem nao carregou corretamente\n";
+        return(-1);
+    }
+
+    width = image.cols;
+    height = image.rows;
+    std::cout &lt;&lt; width &lt;&lt; "x" &lt;&lt; height &lt;&lt; std::endl;
+
+    p.x = 0;
+    p.y = 0;
+    //  Percorrendo as Bordas
+    //  Horizontais superior e inferior
+    for (int i = 0; i &lt; height; i = i + height - 1) {
+        for (int j = 0; j &lt; width; j++) {
+            if (image.at&lt;uchar&gt;(i, j) == 255) {
+                // achou um objeto
+                p.x = j;
+                p.y = i;
+                floodFill(image, p, 0);
+            }
+        }
+    }
+    // Verticais direita e esquerda
+
+    for (int i = 0; i &lt; height; i++) {
+        for (int j = 0; j &lt; width; j = j + width - 1) {
+            if (image.at&lt;uchar&gt;(i, j) == 255) {
+                // achou um objeto
+                p.x = j;
+                p.y = i;
+                floodFill(image, p, 0);
+            }
+        }
+    }
+
+    // busca objetos presentes
+    nobjects = 0;
+    for (int i = 0; i &lt; height; i++) {
+        for (int j = 0; j &lt; width; j++) {
+            if (image.at&lt;uchar&gt;(i, j) == 255) {
+                // achou um objeto
+                nobjects++;
+                p.x = j;
+                p.y = i;
+                // preenche o objeto com o contador
+                cv::floodFill(image, p, nobjects);
+            }
+        }
+    }
+
+    comBolhas = 0;
+    p.x = 0;
+    p.y = 0;
+    floodFill(image, p, 255);
+    for (int i = 1; i &lt; height; i++) {
+        for (int j = 1; j &lt; width; j++) {
+            if (image.at&lt;uchar&gt;(i - 1, j) &gt; 0
+                &amp;&amp; image.at&lt;uchar&gt;(i - 1, j) &lt; 255
+                &amp;&amp; image.at&lt;uchar&gt;(i, j) == 0) {
+                //IdentificaÃ§Ã£o de um objeto
+                comBolhas++;
+                p.x = j;
+                p.y = i;
+                //Contador
+                cv::floodFill(image, p, 255);
+            }
+        }
+    }
+    std::cout &lt;&lt; "a figura tem " &lt;&lt; nobjects &lt;&lt; " objetos\n";
+    std::cout &lt;&lt; "a figura tem " &lt;&lt; comBolhas &lt;&lt; " objetos com bolhas internas\n";
+    cv::imshow("image", image);
+    cv::imwrite("labeling.png", image);
+    cv::waitKey();
+    return 0;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph data-line-306">
+<p>Resultado</p>
+</div>
+<div class="imageblock data-line-308">
+<div class="content">
+<img src="./figuras/contagem.png" alt="contagem">
+</div>
+<div class="title">Figura 7. Bolhas labeling</div>
 </div>
 </div>
 </div>
-<div class="sect1 data-line-209">
+<div class="sect1 data-line-310">
 <h2 id="_manipulação_de_histogramas">6. Manipulação de histogramas</h2>
 <div class="sectionbody">
-<div class="sect2 data-line-211">
+<div class="sect2 data-line-312">
 <h3 id="_equalizador">6.1. Equalizador</h3>
-<div class="paragraph data-line-212">
+<div class="paragraph data-line-313">
 <p>Este programa tem como finalidade equalizar o histograma de imagem capturadas por câmeras com iluminação variada.</p>
 </div>
-<div class="listingblock data-line-215">
+<div class="listingblock data-line-316">
 <div class="content">
 <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
 #include &lt;opencv2/opencv.hpp&gt;
@@ -857,22 +966,22 @@ int main(int argc, char** argv) {
 }</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-348">
+<div class="paragraph data-line-449">
 <p>imagem antes e depois da equalização, vemos uma certa melhora na qualidade e uma definição de cores mais acentuada.</p>
 </div>
-<div class="imageblock data-line-350">
+<div class="imageblock data-line-451">
 <div class="content">
 <img src="./figuras/kiki.png" alt="kiki">
 </div>
-<div class="title">Figura 6. Histograma</div>
+<div class="title">Figura 8. Histograma</div>
 </div>
 </div>
-<div class="sect2 data-line-352">
+<div class="sect2 data-line-453">
 <h3 id="_detector_de_movimento">6.2. Detector de movimento</h3>
-<div class="paragraph data-line-353">
+<div class="paragraph data-line-454">
 <p>Este código mostra a detecção de movimento</p>
 </div>
-<div class="listingblock data-line-356">
+<div class="listingblock data-line-457">
 <div class="content">
 <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
 #include &lt;opencv2/opencv.hpp&gt;
@@ -937,50 +1046,50 @@ int main(int argc, char** argv) {
 }</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-420">
+<div class="paragraph data-line-521">
 <p>A imagem a seguir mostra a detecção de movimento, feita por meio da variação do histrograma.</p>
 </div>
-<div class="imageblock data-line-422">
+<div class="imageblock data-line-523">
 <div class="content">
 <img src="./figuras/detector.png" alt="detector">
 </div>
-<div class="title">Figura 7. Histograma</div>
+<div class="title">Figura 9. Histograma</div>
 </div>
 </div>
 </div>
 </div>
-<div class="sect1 data-line-424">
+<div class="sect1 data-line-525">
 <h2 id="_filtragem_no_domínio_espacial_i">7. Filtragem no domínio espacial I</h2>
 <div class="sectionbody">
-<div class="paragraph data-line-426">
+<div class="paragraph data-line-527">
 <p>Em construção&#8230;&#8203;</p>
 </div>
 </div>
 </div>
-<div class="sect1 data-line-428">
+<div class="sect1 data-line-529">
 <h2 id="_filtragem_no_domínio_espacial_ii">8. Filtragem no domínio espacial II</h2>
 <div class="sectionbody">
-<div class="paragraph data-line-430">
+<div class="paragraph data-line-531">
 <p>Em construção&#8230;&#8203;</p>
 </div>
 </div>
 </div>
-<h1 id="_parte_ii_processamento_de_imagens_no_domínio_da_frequência" class="sect0 data-line-432">Parte II: Processamento de Imagens no Domínio da Frequência</h1>
-<div class="sect1 data-line-435">
+<h1 id="_parte_ii_processamento_de_imagens_no_domínio_da_frequência" class="sect0 data-line-533">Parte II: Processamento de Imagens no Domínio da Frequência</h1>
+<div class="sect1 data-line-536">
 <h2 id="_a_tranformada_discreta_de_fourier">9. A Tranformada Discreta de Fourier</h2>
 <div class="sectionbody">
-<div class="paragraph data-line-437">
+<div class="paragraph data-line-538">
 <p>Em construção&#8230;&#8203;</p>
 </div>
 </div>
 </div>
-<div class="sect1 data-line-439">
+<div class="sect1 data-line-540">
 <h2 id="_filtragem_no_domínio_da_frequência">10. Filtragem no Domínio da Frequência</h2>
 <div class="sectionbody">
-<div class="paragraph data-line-441">
+<div class="paragraph data-line-542">
 <p>Esse filtro tem como finalidade de corrigir imagens com iluminação irregular, nele podemos corrigir os parâmetros de gamma, contraste para que fique da melhor forma possível.</p>
 </div>
-<div class="listingblock data-line-444">
+<div class="listingblock data-line-545">
 <div class="content">
 <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
 #include &lt;opencv2/opencv.hpp&gt;
@@ -1166,37 +1275,37 @@ int main(int argvc, char** argv) {
 }</code></pre>
 </div>
 </div>
-<div class="imageblock data-line-628">
+<div class="imageblock data-line-729">
 <div class="content">
 <img src="./figuras/original%20homo.png" alt="original homo">
 </div>
-<div class="title">Figura 8. Imagem original Homomórfico</div>
+<div class="title">Figura 10. Imagem original Homomórfico</div>
 </div>
-<div class="paragraph data-line-630">
+<div class="paragraph data-line-731">
 <p>Imagem com as configurações dos filtros para correção</p>
 </div>
-<div class="imageblock data-line-632">
+<div class="imageblock data-line-733">
 <div class="content">
 <img src="./figuras/filtro%20homomorfico.png" alt="filtro homomorfico">
 </div>
-<div class="title">Figura 9. Imagem filtro Homomórfico</div>
+<div class="title">Figura 11. Imagem filtro Homomórfico</div>
 </div>
 </div>
 </div>
-<h1 id="_parte_iii_segmentação_de_imagens" class="sect0 data-line-635">Parte III: Segmentação de imagens</h1>
-<div class="sect1 data-line-637">
+<h1 id="_parte_iii_segmentação_de_imagens" class="sect0 data-line-736">Parte III: Segmentação de imagens</h1>
+<div class="sect1 data-line-738">
 <h2 id="_detecção_de_bordas_com_o_algoritmo_de_canny">11. Detecção de bordas com o algoritmo de Canny</h2>
 <div class="sectionbody">
-<div class="paragraph data-line-639">
+<div class="paragraph data-line-740">
 <p>Utilizando o algoritmo de Canny para detecção de bordas e o pontilhismo, conseguimos reproduzir a imagem abaixo de com a técnica pontilista. Tivemos como base o código pontilhismo.cpp para realizar essa atividade. A atividades consiste em utilizar o pontilhismo para gerar uma imagem e em seguida nessa imagem pontilista aplicar o filtro de Canny.</p>
 </div>
-<div class="imageblock data-line-641">
+<div class="imageblock data-line-742">
 <div class="content">
 <img src="./figuras/ikki.png" alt="ikki">
 </div>
-<div class="title">Figura 10. Imagem original</div>
+<div class="title">Figura 12. Imagem original</div>
 </div>
-<div class="listingblock data-line-644">
+<div class="listingblock data-line-745">
 <div class="content">
 <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;algorithm&gt;
 #include &lt;cstdlib&gt;
@@ -1279,45 +1388,45 @@ int main(int argc, char** argv) {
 }</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-725">
+<div class="paragraph data-line-826">
 <p>Imagem usando a técnica pontilista</p>
 </div>
-<div class="imageblock data-line-727">
+<div class="imageblock data-line-828">
 <div class="content">
 <img src="./figuras/Pont1.png" alt="Pont1">
 </div>
-<div class="title">Figura 11. Pontilista</div>
+<div class="title">Figura 13. Pontilista</div>
 </div>
-<div class="paragraph data-line-729">
+<div class="paragraph data-line-830">
 <p>Imagem usando a técnica pontilista e o filtro de Canny</p>
 </div>
-<div class="imageblock data-line-731">
+<div class="imageblock data-line-832">
 <div class="content">
 <img src="./figuras/Pont2.png" alt="Pont2">
 </div>
-<div class="title">Figura 12. Pontilista e Canny</div>
+<div class="title">Figura 14. Pontilista e Canny</div>
 </div>
 </div>
 </div>
-<div class="sect1 data-line-733">
+<div class="sect1 data-line-834">
 <h2 id="_quantização_vetorial_com_k_means">12. Quantização vetorial com k-means</h2>
 <div class="sectionbody">
-<div class="paragraph data-line-735">
+<div class="paragraph data-line-836">
 <p>K-means clustering é um método de quantização de vetores, neste método escolhe-se um centro ou uma determinada quantidades de centros, esses cetros são escolhidos para representar uma determinada classe, feito de maneira aleatória ou não, para se determinar a que classe pertence devesse ver a distância do ponto até o centro, com isso classificando a que classe pertence.</p>
 </div>
-<div class="paragraph data-line-737">
+<div class="paragraph data-line-838">
 <p>Programa onde a execução do código usa o parâmetro nRodadas=1 e inciar os centros de forma aleatória usando o parâmetro KMEANS_RANDOM_CENTERS. Realiza 10 rodadas diferentes do algoritmo.</p>
 </div>
-<div class="paragraph data-line-739">
+<div class="paragraph data-line-840">
 <p>Imagem usanda</p>
 </div>
-<div class="imageblock data-line-741">
+<div class="imageblock data-line-842">
 <div class="content">
 <img src="./figuras/ikki.png" alt="ikki">
 </div>
-<div class="title">Figura 13. Original</div>
+<div class="title">Figura 15. Original</div>
 </div>
-<div class="listingblock data-line-744">
+<div class="listingblock data-line-845">
 <div class="content">
 <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;opencv2/opencv.hpp&gt;
 #include &lt;cstdlib&gt;
@@ -1382,22 +1491,22 @@ int main(int argc, char** argv) {
 }</code></pre>
 </div>
 </div>
-<div class="paragraph data-line-808">
+<div class="paragraph data-line-909">
 <p>Resultado após passar pelo K-means</p>
 </div>
-<div class="imageblock data-line-810">
+<div class="imageblock data-line-911">
 <div class="content">
 <img src="./figuras/Kmeans.gif" alt="Kmeans">
 </div>
-<div class="title">Figura 14. Pontilista</div>
+<div class="title">Figura 16. Pontilista</div>
 </div>
 </div>
 </div>
-<h1 id="_parte_iv_outras_transformadas_matemáticas" class="sect0 data-line-812">Parte IV: Outras Transformadas Matemáticas</h1>
-<div class="sect1 data-line-814">
+<h1 id="_parte_iv_outras_transformadas_matemáticas" class="sect0 data-line-913">Parte IV: Outras Transformadas Matemáticas</h1>
+<div class="sect1 data-line-915">
 <h2 id="_filtragem_de_forma_com_morfologia_matemática">13. Filtragem de forma com morfologia matemática</h2>
 <div class="sectionbody">
-<div class="paragraph data-line-816">
+<div class="paragraph data-line-917">
 <p>Em construção&#8230;&#8203;</p>
 </div>
 </div>
@@ -1405,7 +1514,7 @@ int main(int argc, char** argv) {
 </div>
 <div id="footer">
 <div id="footer-text">
-Última atualização 2023-07-18 21:38:33 -0300
+Última atualização 2023-07-19 01:23:51 -0300
 </div>
 </div>
 <script type="text/x-mathjax-config">
